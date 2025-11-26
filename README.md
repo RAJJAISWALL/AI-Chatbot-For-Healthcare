@@ -2,12 +2,6 @@
 
 A simple Flask web app that provides a healthcare-focused chatbot using Google's Gemini API. It handles authentication, stores chat history per user, and formats model replies into friendly HTML (lists, bold text, headings).
 
-## Demo
-Add a short GIF or screenshot of the chat UI here:
-```
-docs/demo.gif   # create this file and update the link below
-```
-![Chat demo](docs/demo.gif)
 
 ## Features
 - Gemini-powered chatbot with safety prompt (not a doctor, avoids diagnoses).
