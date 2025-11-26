@@ -59,6 +59,10 @@
           placeholder="Repeat your password"
           required
         >
+        <div class="form-check form-switch mt-2">
+          <input class="form-check-input" type="checkbox" id="showPasswords">
+          <label class="form-check-label text-muted-xs" for="showPasswords">Show passwords</label>
+        </div>
       </div>
 
       <button type="submit" class="btn btn-primary-soft w-100 mb-2">
@@ -74,4 +78,21 @@
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("showPasswords");
+    const pwd1 = document.getElementById("password1");
+    const pwd2 = document.getElementById("password2");
+    if (toggle && pwd1 && pwd2) {
+      toggle.addEventListener("change", () => {
+        const newType = toggle.checked ? "text" : "password";
+        pwd1.type = newType;
+        pwd2.type = newType;
+      });
+    }
+  });
+</script>
 {% endblock %}
