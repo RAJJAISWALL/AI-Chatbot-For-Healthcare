@@ -2,6 +2,13 @@
 
 A simple Flask web app that provides a healthcare-focused chatbot using Google's Gemini API. It handles authentication, stores chat history per user, and formats model replies into friendly HTML (lists, bold text, headings).
 
+## Demo
+Add a short GIF or screenshot of the chat UI here:
+```
+docs/demo.gif   # create this file and update the link below
+```
+![Chat demo](docs/demo.gif)
+
 ## Features
 - Gemini-powered chatbot with safety prompt (not a doctor, avoids diagnoses).
 - Auth flows (login/signup) with per-user chat history.
@@ -30,6 +37,11 @@ flask --app main run --debug
 ```
 Open http://127.0.0.1:5000.
 
+## Usage Example
+- Log in or sign up, then ask: “Explain how AI helps in early diabetes detection.”
+- The bot responds with concise, safe guidance and will remind you it is not a doctor.
+- Model replies support basic formatting (bold, lists, headings) so bullets render cleanly.
+
 ## Gemini Model Notes
 - The app reads `GEMINI_MODEL` from `website/.env`. Use a model that supports `generateContent`, e.g. `models/gemini-2.5-pro` or `models/gemini-2.5-flash`.
 - If you change models, restart the app.
@@ -53,9 +65,12 @@ Open http://127.0.0.1:5000.
 - `website/static/` – styles and assets.
 
 ## Troubleshooting
-- **404 model not found**: choose a supported `GEMINI_MODEL` from `genai.list_models()` output.
-- **Missing API key**: ensure `GOOGLE_API_KEY` is set in `website/.env` and reload.
-- **Env not loading**: check `ENV_PATH` in `website/aibot.py` points to the correct `.env`.
+| Issue | Fix |
+| --- | --- |
+| 404 model not found | Set `GEMINI_MODEL` to a model from `genai.list_models()` that supports `generateContent` (e.g., `models/gemini-2.5-pro`). |
+| Missing API key | Ensure `GOOGLE_API_KEY` is in `website/.env`; reload the app. |
+| Env not loading | Verify `ENV_PATH` in `website/aibot.py` points to `website/.env`. |
+| Still seeing raw `*` or `#` | The formatter supports bold, lists, and headings; ensure the model response uses those patterns. |
 
 ## License
 MIT
