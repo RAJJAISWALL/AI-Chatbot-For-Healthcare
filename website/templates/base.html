@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}AI Chatbot{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-soft: rgba(79, 70, 229, 0.08);
+      --bg-body: #0f172a;
+      --bg-card: #020617;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar-blur {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand-pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #9ca3af;
+    }
+
+    .page-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card-glass {
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.18), transparent 55%),
+        rgba(15, 23, 42, 0.92);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 1);
+      padding: 1.75rem 1.75rem 1.5rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control,
+    .form-control:focus {
+      background-color: rgba(15, 23, 42, 0.8);
+      border-color: rgba(148, 163, 184, 0.4);
+      color: #e5e7eb;
+      box-shadow: none;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      padding: 0.65rem 0.85rem;
+    }
+
+    .form-control::placeholder {
+      color: #6b7280;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary-soft {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      border: none;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.65rem 1rem;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-primary-soft:hover {
+      filter: brightness(1.05);
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.6);
+    }
+
+    .text-muted-xs {
+      font-size: 0.75rem;
+      color: #9ca3af !important;
+    }
+
+    .link-soft {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link-soft span {
+      border-bottom: 1px dashed rgba(129, 140, 248, 0.8);
+    }
+
+    .link-soft:hover span {
+      border-bottom-style: solid;
+      color: #a5b4fc;
+    }
+
+    .pill-badge {
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #9ca3af;
+    }
+
+    .flash-container {
+      max-width: 420px;
+      margin: 0 auto 0.75rem;
+    }
+
+    .alert {
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  <div class="app-shell">
+    <!-- Top nav -->
+    <nav class="navbar navbar-blur navbar-expand-sm px-3 px-md-4">
+      <div class="container-fluid px-0">
+        <a class="navbar-brand d-flex align-items-center gap-2 text-light fw-semibold"
+          href="{{ url_for('aibot.home') }}">
+          <div class="d-flex align-items-center justify-content-center rounded-circle"
+            style="width: 32px; height: 32px; background: radial-gradient(circle at 30% 0, #a5b4fc, #4f46e5); box-shadow: 0 0 12px rgba(129, 140, 248, 0.7);">
+            🤖
+          </div>
+          <span>AI Chatbot</span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          {% if current_user.is_authenticated %}
+          <span class="text-muted-xs me-2 d-none d-sm-inline">
+            Logged in as <strong>{{ current_user.first_name }}</strong>
+          </span>
+
+          <form method="POST" action="{{ url_for('auth.logout') }}" class="d-inline" id="logout-form">
+            <button type="submit" class="btn btn-sm btn-outline-light rounded-pill px-3">
+              Logout
+            </button>
+
+          </form>
+          {% else %}
+
+
+          <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-light rounded-pill px-3 me-1">
+            Login
+          </a>
+          <a href="{{ url_for('auth.sign_up') }}" class="btn btn-sm btn-light rounded-pill px-3">
+            Sign up
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Flash messages -->
+    <div class="page-main pt-3">
+      <div class="w-100">
+        <div class="flash-container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else category }} mb-2" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <footer class="py-3 text-center text-muted-xs">
+      <div class="container small">
+        <span class="brand-pill">
+          <span class="me-1">●</span> Powered by Flask &amp; TensorFlow
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var logoutForm = document.getElementById('logout-form');
+      if (logoutForm) {
+        logoutForm.addEventListener('submit', function (e) {
+          var ok = confirm('Are you sure you want to log out?');
+          if (!ok) {
+            e.preventDefault(); // stop the form from submitting
+          }
+        });
+      }
+    });
+  </script>
+  
+  
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+{"intents": [
+ {"tag": "disease ",
+        "patterns": ["sneezing,itchiness, blocked, runny nose "],
+        "responses": [" Allergic rhinitis."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["retlessness, difficulty concentrating, irritability, dizziness, irregular heartbeat"],
+        "responses": [" Generalises Anxiety Disorder."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["joint pain, tenderness, stiffness, red skin over affected joint, weakness"],
+        "responses": [" Osteoarthritis."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["weight loss, sweating, lack of energy,redness,"],
+        "responses": [" Rheumatoid."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["a tight chest, coughing, wheezing sound while breathing,"],
+        "responses": [" ."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["a sore throat, sneezing, blocked nose, hoarse voice, loss of taste,earache"],
+        "responses": [" Commom Cold."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["feeling very thirsty,urinating oftenly at night, loss of muscle bulk "],
+        "responses": [" Type 1 Diabetes."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["slow to heal wounds, blurred vision, very tried"],
+        "responses": [" Type 2 Diabetes."],
+        "context": [""]
+},
+{"tag": "disease ",
+        "patterns": ["feeling full, bloating,nausea,belching,vomiting,"],
+        "responses": [" ."],
+        "context": [""]
+}
+]
+}
