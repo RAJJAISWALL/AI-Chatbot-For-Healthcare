@@ -12,11 +12,6 @@
     transition: background 0.3s ease, color 0.3s ease;
   }
 
-  .chat-wrapper.light {
-    background: #f3f4f6;
-    color: #111827;
-  }
-
   .chat-message {
     display: flex;
     margin-bottom: 15px;
@@ -84,6 +79,27 @@
     cursor: pointer;
     font-size: 20px;
     margin-left: 0.75rem;
+  }
+
+  /* Light mode overrides for chat */
+  body.light-mode .chat-wrapper {
+    background: #f3f4f6;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+  }
+
+  body.light-mode .chat-bubble.bot {
+    background: #ffffff;
+    border-color: #e5e7eb;
+    color: #111827;
+  }
+
+  body.light-mode .chat-bubble.user {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+  }
+
+  body.light-mode .timestamp {
+    color: #6b7280;
   }
 
   @keyframes fadeIn {
@@ -230,15 +246,18 @@
 
   // Dark / Light mode toggle
   const toggle = document.getElementById("themeToggle");
+  const bodyEl = document.body;
   let dark = true;
 
   toggle.addEventListener("click", () => {
     dark = !dark;
     if (dark) {
       wrapper.classList.remove("light");
+      bodyEl.classList.remove("light-mode");
       toggle.textContent = "🌙";
     } else {
       wrapper.classList.add("light");
+      bodyEl.classList.add("light-mode");
       toggle.textContent = "☀️";
     }
   });
