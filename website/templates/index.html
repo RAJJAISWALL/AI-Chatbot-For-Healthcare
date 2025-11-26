@@ -113,7 +113,7 @@
           <div class="chat-message bot">
             <div class="avatar bot me-2"></div>
             <div>
-              <div class="chat-bubble bot">{{ msg.text }}</div>
+          <div class="chat-bubble bot">{{ msg.text | safe }}</div>
               <div class="timestamp">{{ msg.time }}</div>
             </div>
           </div>
@@ -209,7 +209,7 @@
       $("#chat-wrapper").append(botBlock);
       const bubble = botBlock.find(".chat-bubble")[0];
 
-      typeAnimation(bubble, data);
+      bubble.innerHTML = data;
       scrollToBottom();
     }).fail(function () {
       const botError = `

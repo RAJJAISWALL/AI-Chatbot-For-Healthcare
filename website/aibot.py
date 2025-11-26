@@ -1,4 +1,6 @@
 import os
+import html
+import re
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -27,9 +29,49 @@ Rules:
 - For any serious or personal medical concern, always tell the user to consult a qualified doctor.
 - Keep replies concise but helpful.
 """
-
 # Preferred Gemini model; override with GEMINI_MODEL in env if needed.
 MODEL_ID = os.getenv("GEMINI_MODEL", "gemini-1.0-pro")
+
+SYSTEM_PROMPT = ""
+
+def format_to_html(raw: str) -> str:
+    """
+    Minimal markdown-ish formatter:
+    - escape HTML
+    - **bold** -> <strong>
+    - lines starting with * or - become list items
+    - other lines become paragraphs
+    """
+    escaped = html.escape(raw.strip())
+    lines = escaped.splitlines()
+    parts = []
+    list_open = False
+
+    def apply_bold(text: str) -> str:
+        return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
+
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith(("* ", "- ")):
+            if not list_open:
+                parts.append("<ul>")
+                list_open = True
+            content = apply_bold(stripped[2:].strip())
+            parts.append(f"<li>{content}</li>")
+        else:
+            if list_open:
+                parts.append("</ul>")
+                list_open = False
+            content = apply_bold(stripped)
+            if content:
+                parts.append(f"<p>{content}</p>")
+            else:
+                parts.append("<br>")
+
+    if list_open:
+        parts.append("</ul>")
+
+    return "".join(parts)
 
 
 # ------------------------------
@@ -77,7 +119,7 @@ Assistant:"""
     response = model.generate_content(prompt)
 
     # Safety: sometimes response.text can be None
-    return (response.text or "").strip()
+    return format_to_html((response.text or "").strip())
 
 
 # ------------------------------
