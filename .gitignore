@@ -1,2 +1,4 @@
 website\__pycache__
 instance
+*.env
+website/.env
